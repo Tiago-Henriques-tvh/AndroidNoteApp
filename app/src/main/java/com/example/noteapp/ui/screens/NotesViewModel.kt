@@ -1,6 +1,5 @@
 package com.example.noteapp.ui.screens
 
-
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel

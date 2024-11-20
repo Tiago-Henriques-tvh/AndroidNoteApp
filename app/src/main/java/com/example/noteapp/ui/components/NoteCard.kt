@@ -24,8 +24,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.noteapp.R
 import com.example.noteapp.data.models.Note
 import com.example.noteapp.ui.theme.NoteAppTheme
 import com.example.noteapp.utils.Converters
@@ -47,7 +50,7 @@ fun NoteCard(
     val color = Converters.longToColor(note.color)
 
     ElevatedCard(
-        modifier = modifier,
+        modifier = modifier.testTag(stringResource(R.string.notecard)) ,
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(color),
         onClick = {

@@ -14,4 +14,6 @@
     <string name="note_detail">Note Details</string>
     <string name="edit_item_title">Edit Item</string>
     <string name="update_note">Update Note</string>
+    <string name="notecard">noteCard</string>
+    <string name="to_trash_screen">to_trash_screen</string>
 </resources>

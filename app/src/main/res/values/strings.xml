@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Note App</string>
+    <string name="add_note_confirm">Confirm</string>
+    <string name="add_note_button">Add Note</string>
+    <string name="add_note_cancel">Cancel</string>
+    <string name="add_note_button_text">Add Note</string>
+    <string name="no_notes_yet">No notes yet!</string>
+    <string name="title_dialog_box">Title</string>
+    <string name="description_dialog_box">Description</string>
+    <string name="deleted_notes">Deleted Notes</string>
+    <string name="back_button">back_button</string>
+    <string name="my_notes">My Notes</string>
+    <string name="notes_to_delete">Trash</string>
+    <string name="note_detail">Note Details</string>
+    <string name="edit_item_title">Edit Item</string>
+    <string name="update_note">Update Note</string>
+</resources>

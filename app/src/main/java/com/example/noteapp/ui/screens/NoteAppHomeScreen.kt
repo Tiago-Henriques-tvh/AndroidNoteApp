@@ -31,20 +31,22 @@ import androidx.navigation.compose.rememberNavController
 import com.example.noteapp.R
 import com.example.noteapp.ui.AppViewModelProvider
 import com.example.noteapp.ui.navigation.NoteNavHost
+import com.example.noteapp.ui.screens.viewModels.NotesViewModel
+import com.example.noteapp.ui.screens.viewModels.UserPreferencesViewModel
 import com.example.noteapp.ui.theme.NoteAppTheme
 import com.example.noteapp.utils.WindowStateUtils
 
 enum class NoteAppScreens(@StringRes val title: Int) {
-    Notes(title = R.string.my_notes),
-    NotesToDelete(title = R.string.notes_to_delete),
-    NoteDetail(title = R.string.note_detail)
+    Notes(title = R.string.my_notes), NotesToDelete(title = R.string.notes_to_delete), NoteDetail(
+        title = R.string.note_detail
+    )
 }
 
 @Composable
 fun NoteAppHomeScreen(
     modifier: Modifier = Modifier,
     windowSize: WindowWidthSizeClass = WindowWidthSizeClass.Compact,
-    viewModel: NotesViewModel,
+    preferencesViewModel: UserPreferencesViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -52,6 +54,7 @@ fun NoteAppHomeScreen(
         backStackEntry?.destination?.route ?: NoteAppScreens.Notes.name
     )
     val contentPadding = determineContentType(windowSize)
+    val viewModel: NotesViewModel = viewModel(factory = AppViewModelProvider.Factory)
     val uiState by viewModel.uiState.collectAsState()
 
     Scaffold(topBar = {
@@ -59,10 +62,10 @@ fun NoteAppHomeScreen(
             currentScreen = currentScreen,
             canNavigateBack = navController.previousBackStackEntry != null,
             navigateUp = { navController.navigateUp() },
-            changeTheme = {
-                viewModel.changeTheme(!uiState.isBlackTheme.value)
+            changeTheme = { isChecked ->
+                preferencesViewModel.changeTheme(isBlackTheme = isChecked)
             },
-            isBlackTheme = uiState.isBlackTheme.value,
+            isBlackTheme = preferencesViewModel.isDarkThemeFlow.collectAsState(initial = preferencesViewModel.getInitialTheme()).value
         )
     }) { innerPadding ->
         NoteNavHost(
@@ -94,8 +97,7 @@ fun TopAppBar(
 ) {
     CenterAlignedTopAppBar(title = {
         Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(8.dp)
+            verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(8.dp)
         ) {
             Text(
                 text = stringResource(currentScreen.title),
@@ -124,18 +126,13 @@ fun TopAppBar(
 
 @Composable
 fun ThemeSwitch(
-    isBlackTheme: Boolean,
-    onToggle: (Boolean) -> Unit,
-    modifier: Modifier = Modifier
+    isBlackTheme: Boolean, onToggle: (Boolean) -> Unit, modifier: Modifier = Modifier
 ) {
     Switch(
-        checked = isBlackTheme,
-        onCheckedChange = onToggle,
-        colors = SwitchDefaults.colors(
+        checked = isBlackTheme, onCheckedChange = onToggle, colors = SwitchDefaults.colors(
             checkedThumbColor = MaterialTheme.colorScheme.secondary,
             uncheckedThumbColor = MaterialTheme.colorScheme.onSecondary
-        ),
-        modifier = modifier
+        ), modifier = modifier
     )
 }
 
@@ -143,7 +140,7 @@ fun ThemeSwitch(
 @Composable
 fun NoteScreenPreview() {
     NoteAppTheme(darkTheme = true) {
-        NoteAppHomeScreen(viewModel = viewModel(factory = AppViewModelProvider.Factory))
+        NoteAppHomeScreen()
     }
 }
 
@@ -152,10 +149,7 @@ fun NoteScreenPreview() {
 fun NoteScreenPreviewDark() {
     NoteAppTheme(darkTheme = true) {
         Surface {
-            NoteAppHomeScreen(
-                windowSize = WindowWidthSizeClass.Expanded,
-                viewModel = viewModel(factory = AppViewModelProvider.Factory)
-            )
+            NoteAppHomeScreen(windowSize = WindowWidthSizeClass.Expanded)
         }
     }
 }

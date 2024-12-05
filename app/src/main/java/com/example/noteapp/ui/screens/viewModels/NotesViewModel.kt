@@ -1,17 +1,13 @@
-package com.example.noteapp.ui.screens
+package com.example.noteapp.ui.screens.viewModels
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.noteapp.data.UserPreferencesRepository
 import com.example.noteapp.data.models.Note
 import com.example.noteapp.data.repositories.NotesRepository
 import com.example.noteapp.utils.Converters
 import com.example.noteapp.utils.PreDefinedColors
 import com.example.noteapp.utils.getColor
 import com.example.noteapp.utils.getRandomColor
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,22 +16,20 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 data class NotesUIState(
-    val notes: List<Note> = emptyList(),
-    val toDeleteList: List<Note> = emptyList(),
-    val isBlackTheme: MutableState<Boolean> = mutableStateOf(false),
-    val selectedNote: Note? = null
+    val notes: List<Note> = emptyList(), // For home screen
+    val toDeleteList: List<Note> = emptyList(), // For delete screen
+    val selectedNote: Note? = null // For detail screen
 )
 
 class NotesViewModel(
     private val notesRepository: NotesRepository,
-    private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(NotesUIState())
     val uiState: StateFlow<NotesUIState> = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
-            initializeViewModel()
+            refreshNotes()
         }
     }
 
@@ -43,19 +37,6 @@ class NotesViewModel(
         _uiState.update { currentState ->
             currentState.copy(selectedNote = note)
         }
-    }
-
-    fun changeTheme(isBlackTheme: Boolean) {
-        viewModelScope.launch {
-            userPreferencesRepository.saveThemePreference(isBlackTheme)
-            _uiState.update { currentState ->
-                currentState.copy(isBlackTheme = mutableStateOf(isBlackTheme))
-            }
-        }
-    }
-
-    fun isDarkThemeFlow(): Flow<Boolean> {
-        return userPreferencesRepository.isBlackTheme
     }
 
     fun addNote(title: String, description: String, colorName: PreDefinedColors) {
@@ -108,22 +89,6 @@ class NotesViewModel(
         viewModelScope.launch {
             notesRepository.updateNote(note)
             refreshNotes()
-        }
-    }
-
-    private suspend fun initializeViewModel() {
-        observeUserPreferences()
-        refreshNotes()
-    }
-
-    private fun observeUserPreferences() {
-        viewModelScope.launch {
-            userPreferencesRepository.isBlackTheme
-                .collect { isBlackTheme ->
-                    _uiState.update { currentState ->
-                        currentState.copy(isBlackTheme = mutableStateOf(isBlackTheme))
-                    }
-                }
         }
     }
 

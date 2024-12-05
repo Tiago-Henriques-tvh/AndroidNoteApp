@@ -24,7 +24,7 @@ class NoteAppRestaurationTest {
         stateRestorationTester.setContent {
             NoteAppHomeScreen(
                 windowSize = WindowWidthSizeClass.Compact,
-                viewModel = viewModel(factory = AppViewModelProvider.Factory)
+                preferencesViewModel = viewModel(factory = AppViewModelProvider.Factory)
             )
         }
 
@@ -42,7 +42,7 @@ class NoteAppRestaurationTest {
         stateRestorationTester.setContent {
             NoteAppHomeScreen(
                 windowSize = WindowWidthSizeClass.Expanded,
-                viewModel = viewModel(factory = AppViewModelProvider.Factory)
+                preferencesViewModel = viewModel(factory = AppViewModelProvider.Factory)
             )
         }
 

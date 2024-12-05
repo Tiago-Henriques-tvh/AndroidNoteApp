@@ -12,8 +12,8 @@ import com.example.noteapp.ui.screens.NoteAppScreens
 import com.example.noteapp.ui.screens.NoteDetailScreen
 import com.example.noteapp.ui.screens.NotesHomeScreen
 import com.example.noteapp.ui.screens.NotesToDeleteScreen
-import com.example.noteapp.ui.screens.NotesUIState
-import com.example.noteapp.ui.screens.NotesViewModel
+import com.example.noteapp.ui.screens.viewModels.NotesUIState
+import com.example.noteapp.ui.screens.viewModels.NotesViewModel
 import com.example.noteapp.utils.WindowStateUtils
 
 @Composable

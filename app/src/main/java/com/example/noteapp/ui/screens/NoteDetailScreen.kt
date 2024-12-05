@@ -26,6 +26,7 @@ import com.example.noteapp.R
 import com.example.noteapp.data.models.Note
 import com.example.noteapp.ui.AppViewModelProvider
 import com.example.noteapp.ui.components.NoteCard
+import com.example.noteapp.ui.screens.viewModels.NotesViewModel
 import com.example.noteapp.ui.theme.NoteAppTheme
 
 @Composable

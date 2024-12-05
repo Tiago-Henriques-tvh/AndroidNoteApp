@@ -5,17 +5,20 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.noteapp.NotesApplication
-import com.example.noteapp.ui.screens.NotesViewModel
+import com.example.noteapp.ui.screens.viewModels.NotesViewModel
+import com.example.noteapp.ui.screens.viewModels.UserPreferencesViewModel
 
 object AppViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
-            val application = (this[APPLICATION_KEY] as NotesApplication)
-
             NotesViewModel(
                 notesApplication().container.notesRepository,
-                application.userPreferencesRepository
             )
+        }
+
+        initializer {
+            val application = (this[APPLICATION_KEY] as NotesApplication)
+            UserPreferencesViewModel(application.userPreferencesRepository)
         }
     }
 }

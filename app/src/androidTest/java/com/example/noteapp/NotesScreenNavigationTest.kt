@@ -32,11 +32,10 @@ class NotesScreenNavigationTest {
             }
             NoteAppHomeScreen(
                 windowSize = WindowWidthSizeClass.Compact,
-                viewModel = viewModel(factory = AppViewModelProvider.Factory)
+                preferencesViewModel = viewModel(factory = AppViewModelProvider.Factory)
             )
         }
 
-        // Test Note Added
         composeTestRule.onNodeWithText("Add Note").performClick()
         composeTestRule.onNodeWithText("Title").performTextInput("Test Title")
         composeTestRule.onNodeWithText("Confirm").performClick()

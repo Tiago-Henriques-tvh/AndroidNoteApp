@@ -39,6 +39,7 @@ import com.example.noteapp.R
 import com.example.noteapp.data.models.Note
 import com.example.noteapp.ui.components.AddNoteDialog
 import com.example.noteapp.ui.components.DisplayListNotes
+import com.example.noteapp.ui.screens.viewModels.NotesViewModel
 import com.example.noteapp.ui.theme.NoteAppTheme
 import com.example.noteapp.utils.PreDefinedColors
 import com.example.noteapp.utils.WindowStateUtils

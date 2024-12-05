@@ -1,5 +1,6 @@
 package com.example.noteapp.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -50,7 +51,7 @@ fun NoteCard(
     val color = Converters.longToColor(note.color)
 
     ElevatedCard(
-        modifier = modifier.testTag(stringResource(R.string.notecard)) ,
+        modifier = modifier.testTag(stringResource(R.string.notecard)+note.id) ,
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(color),
         onClick = {

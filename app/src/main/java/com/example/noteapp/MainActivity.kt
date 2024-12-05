@@ -12,13 +12,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.noteapp.ui.AppViewModelProvider
 import com.example.noteapp.ui.screens.NoteAppHomeScreen
-import com.example.noteapp.ui.screens.NotesViewModel
+import com.example.noteapp.ui.screens.viewModels.UserPreferencesViewModel
 import com.example.noteapp.ui.theme.NoteAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -27,8 +26,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val viewModel: NotesViewModel = viewModel(factory = AppViewModelProvider.Factory)
-            val isDarkTheme by viewModel.isDarkThemeFlow().collectAsState(initial = false)
+            val viewModel: UserPreferencesViewModel = viewModel(factory = AppViewModelProvider.Factory)
+            val isDarkTheme = viewModel.isDarkThemeFlow.collectAsState(initial = viewModel.getInitialTheme()).value
 
             NoteAppTheme(darkTheme = isDarkTheme) {
                 val layoutDirection = LocalLayoutDirection.current
@@ -44,7 +43,7 @@ class MainActivity : ComponentActivity() {
                     NoteAppHomeScreen(
                         modifier = Modifier.padding(innerPadding),
                         windowSize = windowSize.widthSizeClass,
-                        viewModel
+                        preferencesViewModel = viewModel
                     )
                 }
             }

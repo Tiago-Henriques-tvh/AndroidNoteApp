@@ -5,6 +5,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.noteapp.data.models.Note
 import com.example.noteapp.ui.AppViewModelProvider
 import com.example.noteapp.ui.components.DisplayListNotes
+import com.example.noteapp.ui.screens.viewModels.NotesViewModel
 
 @Composable
 fun NotesToDeleteScreen(

@@ -81,9 +81,9 @@ dependencies {
     implementation("androidx.datastore:datastore-core-android:1.1.1")
 
     // Unit test dependencies
-    testImplementation("org.mockito:mockito-inline:4.8.0")
     testImplementation("junit:junit:4.13.2")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
+    testImplementation("org.slf4j:slf4j-simple:2.0.9")
+    testImplementation(libs.mockk)
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
 
     // Android test dependencies
